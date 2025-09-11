@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Cadastro de Quarto</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="icon" href="/image/favicon.png" />
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="/webjars/bootstrap/5.3.8/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/webjars/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<header>
+	<nav class="navbar navbar-inverse navbar navbar-dark bg-dark fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="btn btn-dark navbar-toggle pull-left">
+					<i class="oi oi-menu"></i>
+				</button>
+				<a class="navbar-brand" href="#">Gerador de Comandas</a>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<div class="layout-main">
+	<!-- Menu lateral -->
+	<aside>
+		<nav class="sidebar sidebar-open">
+			<ul class="nav nav-pills">
+				<li class="nav-item"><a class="nav-link " href="/"> <i
+						class="oi oi-home"></i> <span>Home</span>
+				</a></li>
+			</ul>
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active" >Acomodação</span></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/quarto/cadastrar"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/quarto/listar"> <i class="oi oi-spreadsheet"></i>
+					<span>Listar </span>
+				</a></li>
+			</ul>
+
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active" >Cliente</span></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/cliente/cadastrar"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/cliente/listar"> <i class="oi oi-spreadsheet"></i>
+					<span>Listar </span>
+				</a></li>
+			</ul>
+
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active" >Estoque</span></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/estoque/cadastrar"> <i class="oi oi-plus"></i> <span>Cadastrar</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/estoque/listar"> <i class="oi oi-spreadsheet"></i>
+					<span>Listar </span>
+				</a></li>
+			</ul>
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active" >Produto</span></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/produto/cadastrar"> <i class="oi oi-plus"></i> <span>Cadastrar </span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+										href="/produto/listar"> <i
+						class="oi oi-spreadsheet"></i> <span>Listar </span>
+				</a></li>
+			</ul>
+
+			<ul class="nav nav-pills">
+				<li class="nav-item"><span class="nav-link active">Histórico</span></li>
+
+				<li class="nav-item"><a class="nav-link"
+										href="/historico/listar"> <i class="oi oi-spreadsheet"></i> <span>Listar </span>
+				</a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Conteúdo -->
+	<section class="layout-content">
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span>Acomodação - Cadastro</span>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container mt-4">
+			<h3>Cadastrar Quarto</h3>
+			<form action="/quarto/salvar" method="post" class="mt-3">
+
+				<div class="mb-3">
+					<label for="numero" class="form-label">Número do Quarto</label>
+					<input type="number" class="form-control" id="numero" name="numero" required>
+				</div>
+
+				<div class="mb-3">
+					<label for="tipo" class="form-label">Tipo</label>
+					<select class="form-control" id="tipo" name="tipo" required>
+						<option value="">Selecione</option>
+						<option value="Standard">Standard</option>
+						<option value="Luxo">Luxo</option>
+						<option value="Master">Master</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label for="valor" class="form-label">Valor da Diária</label>
+					<input type="number" step="0.01" class="form-control" id="valor" name="valor" required>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label">Disponível?</label>
+					<select class="form-control" id="eDisponivel" name="eDisponivel">
+						<option value="true">Sim</option>
+						<option value="false">Não</option>
+					</select>
+				</div>
+
+				<button type="submit" class="btn btn-primary">
+					<i class="oi oi-check"></i> Salvar
+				</button>
+				<a href="/quarto/listar" class="btn btn-secondary">
+					<i class="oi oi-x"></i> Cancelar
+				</a>
+			</form>
+		</div>
+	</section>
+</div>
+
+<footer class="layout-footer">
+	<div class="container">
+		<span class="footer-copy">&copy; 2025 Inn Orders Generator. Todos os direitos reservados.</span>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="/webjars/github-com-jquery-jquery/3.6.0/dist/jquery.min.js"></script>
+<script src="/webjars/github-com-igorescobar-jQuery-Mask-Plugin/1.14.16/dist/jquery.mask.min.js"></script>
+<script src="/webjars/bootstrap/5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+        $(".navbar-toggle").click(function () {
+            $(".sidebar").toggleClass("sidebar-open");
+        });
+    });
+</script>
+</body>
+</html>
