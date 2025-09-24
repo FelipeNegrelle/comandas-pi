@@ -7,7 +7,7 @@ import java.util.List;
 public interface ComandaDao {
     void save(Comanda comanda);
     void update(Comanda comanda);
-    void delete(Long id);
-    Comanda findById(Long id);
+    void delete(Integer id);
+    Comanda findById(Integer id);
     List<Comanda> findAll();
 }
