@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <title>Gerador de comandas</title>
@@ -18,23 +18,26 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/style.css" />
 </head>
+
 <body>
-  <header>
+  <header th:replace="~{fragments/header :: cabeçalho}">
     <div>
       header
     </div>
   </header>
-    <div>
+    <div class="layout-main">
       <aside>
-        <nav>
+        <nav th:replace="~{fragments/sidebar :: menu}">
           <span>menu</span>
         </nav>
       </aside>
     </div>
-    <section>
+
+  <section class="layout-content" layout:fragment="corpo">
       <div>conteúdo da pag</div>
     </section>
-    <footer>
+
+  <footer th:replace="~{fragments/footer :: rodape}">
       <div>rodapé</div>
     </footer>
 
