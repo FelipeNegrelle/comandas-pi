@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class QuartoServiceImpl implements QuartoService {
     @Autowired
     private QuartoDao dao;
