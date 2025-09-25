@@ -24,8 +24,29 @@
 
 </div>
 
-
-
 <footer th:replace="fragments/footer :: rodape">rodapé</footer>
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- jQuery -->
+<script src="/webjars/github-com-jquery-jquery/3.6.0/dist/jquery.min.js"></script>
+
+<!-- jQuery Mask Plugin -->
+<script src="/webjars/github-com-igorescobar-jQuery-Mask-Plugin/1.14.16/dist/jquery.mask.min.js"></script>
+
+<!-- Bootstrap JS (com Popper incluso) -->
+<script src="/webjars/bootstrap/5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+      $('[data-toggle="popover"]').popover();
+  });
+
+  $(document).ready(function () {
+      $(".navbar-toggle").click(function () {
+          $(".sidebar").toggleClass("sidebar-open");
+      })
+  });
+</script>
 </body>
 </html>
