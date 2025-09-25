@@ -5,64 +5,27 @@
 <head>
   <title>Gerador de comandas</title>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="icon" href="/image/favicon.png" />
-
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/webjars/bootstrap/5.3.8/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/webjars/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
-
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-  <header th:replace="~{fragments/header :: cabeçalho}">
-    <div>
-      header
-    </div>
-  </header>
-    <div class="layout-main">
-      <aside>
-        <nav th:replace="~{fragments/sidebar :: menu}">
-          <span>menu</span>
-        </nav>
-      </aside>
-    </div>
+<header th:replace="fragments/header :: cabeçalho">header</header>
 
+<div class="layout-main">
+  <aside>
+    <nav th:replace="fragments/sidebar :: menu">menu</nav>
+  </aside>
+  <!-- Aqui é onde as páginas filhas vão injetar conteúdo -->
   <section class="layout-content" layout:fragment="corpo">
-      <div>conteúdo da pag</div>
-    </section>
+    <div>conteúdo padrão do layout</div>
+  </section>
 
-  <footer th:replace="~{fragments/footer :: rodape}">
-      <div>rodapé</div>
-    </footer>
+</div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- jQuery -->
-    <script src="/webjars/github-com-jquery-jquery/3.6.0/dist/jquery.min.js"></script>
 
-    <!-- jQuery Mask Plugin -->
-    <script src="/webjars/github-com-igorescobar-jQuery-Mask-Plugin/1.14.16/dist/jquery.mask.min.js"></script>
 
-    <!-- Bootstrap JS (com Popper incluso) -->
-    <script src="/webjars/bootstrap/5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script type="text/javascript">
-      $(function () {
-          $('[data-toggle="popover"]').popover();
-      });
-
-      $(document).ready(function () {
-          $(".navbar-toggle").click(function () {
-              $(".sidebar").toggleClass("sidebar-open");
-          })
-      });
-    </script>
-
+<footer th:replace="fragments/footer :: rodape">rodapé</footer>
 </body>
 </html>
