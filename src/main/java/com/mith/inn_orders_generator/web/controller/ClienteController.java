@@ -4,6 +4,7 @@ import com.mith.inn_orders_generator.domain.Cliente;
 import com.mith.inn_orders_generator.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ public class ClienteController {
     }
 
     @GetMapping("/listar")
-    public String listar(){
+    public String listar(ModelMap model){
+        model.addAttribute("cliente", service.buscarTodos());
         return "/cliente/lista";
     }
     @PostMapping("/salvar")
