@@ -18,7 +18,7 @@
 						</li>
 					</ul>
 				</div>
-				<a class="btn btn-primary btn-md" href="/clientes/listar" role="button">
+				<a class="btn btn-primary btn-md" href="/cliente/listar" role="button">
 					<span class="oi oi-spreadsheet" aria-hidden="true"></span>
 					<span>Listar Clientes</span>
 				</a>
@@ -26,17 +26,17 @@
 		</div>
 
 		<div class="container" id="cadastro">
-			<form action="/clientes/salvar" method="POST">
+			<form th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nome">Nome</label>
 						<input type="text" class="form-control" id="nome"
-							   placeholder="Nome Completo" name="nome" required/>
+							   placeholder="Nome Completo" th:field="*{nome}" required/>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="doc">Documento (CPF/CNPJ)</label>
 						<input type="text" class="form-control" id="doc"
-							   placeholder="Documento" name="doc" required/>
+							   placeholder="Documento" th:field="*{doc}"/>
 					</div>
 				</div>
 
@@ -44,18 +44,9 @@
 					<div class="form-group col-md-6">
 						<label for="telefone">Telefone</label>
 						<input type="text" class="form-control" id="telefone"
-							   placeholder="(99) 99999-9999" name="telefone"/>
+							   placeholder="(99) 99999-9999" th:field="*{telefone}"/>
 					</div>
-					<div class="form-group col-md-6">
-						<label for="quarto">Quarto</label>
-						<select id="quarto" class="form-control" name="quarto.id">
-							<option value="">Selecione...</option>
-							<!-- Exemplo com thymeleaf -->
-							<option th:each="quarto : ${quartos}"
-									th:value="${quarto.id}"
-									th:text="${quarto.numero}">101</option>
-						</select>
-					</div>
+
 				</div>
 
 				<input type="hidden" id="id" name="id"/>

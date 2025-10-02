@@ -41,4 +41,12 @@ public class Cliente extends AbstractEntity<Integer> {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public Quarto getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
+    }
 }
