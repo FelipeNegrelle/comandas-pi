@@ -40,4 +40,11 @@ public class ClienteController {
         service.editar(cliente);
         return "redirect:/cliente/listar";
     }
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") Integer id, ModelMap model){
+        if (!service.estaHospedado(id)){
+            service.excluir(id);
+        }
+        return listar(model);
+    }
 }

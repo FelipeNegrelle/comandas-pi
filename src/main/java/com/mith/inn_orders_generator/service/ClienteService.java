@@ -14,4 +14,6 @@ public interface ClienteService {
     Cliente buscarPorId(Integer id);
 
     List<Cliente> buscarTodos();
+
+    boolean estaHospedado(Integer id);
 }

@@ -45,9 +45,9 @@
 							<a class="btn btn-info btn-sm" th:href="@{/cliente/editar/{id} (id=${c.id})}">
 								<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 							</a>
-							<button th:id="'btn_cliente/excluir/' + ${c.id}" type="button"
+							<button th:id="${ 'btn_cliente/excluir/' + c.id}" type="button"
 									class="btn btn-danger btn-sm"
-									data-toggle="modal" data-target="#myModal">
+									data-bs-toggle="modal" data-bs-target="#myModal">
 								<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 							</button>
 						</td>
@@ -56,6 +56,7 @@
 				</table>
 			</div>
 		</div>
+		<div th:replace="fragments/modal :: modal"></div>
 	</section>
 
 </body>

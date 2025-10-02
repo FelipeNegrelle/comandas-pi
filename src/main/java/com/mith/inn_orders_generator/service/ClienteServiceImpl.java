@@ -40,4 +40,10 @@ public class ClienteServiceImpl implements ClienteService{
     public List<Cliente> buscarTodos() {
         return dao.findAll();
     }
+
+    @Override
+    public boolean estaHospedado(Integer id) {
+        Cliente cliente = buscarPorId(id);
+        return cliente.getQuarto() != null;
+    }
 }
