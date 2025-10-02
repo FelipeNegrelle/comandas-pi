@@ -52,8 +52,8 @@
 					<div class="form-group col-md-3">
 						<label for="temLimite">Tem Limite?</label>
 						<select id="temLimite" class="form-control" th:field="*{temLimite}">
-							<option value="false">Não (serviço)</option>
-							<option value="true">Sim (consumível)</option>
+							<option th:value="false">Não (serviço)</option>
+							<option th:value="true">Sim (consumível)</option>
 						</select>
 					</div>
 

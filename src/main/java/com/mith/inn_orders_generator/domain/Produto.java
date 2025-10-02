@@ -12,7 +12,7 @@ public class Produto extends AbstractEntity<Integer> {
     private String descr;
 
     @Column(name = "tem_limite")
-    private boolean temLimite;
+    private Boolean temLimite;
 
     private Integer quantidade;
 
@@ -25,8 +25,12 @@ public class Produto extends AbstractEntity<Integer> {
         this.descr = descr;
     }
 
-    public void setTemLimite(boolean temLimite) {
-        this.temLimite = temLimite = false;
+    public Boolean getTemLimite() {
+        return temLimite;
+    }
+
+    public void setTemLimite(Boolean temLimite) {
+        this.temLimite = temLimite;
     }
 
     public void setQuantidade(Integer quantidade) {
@@ -45,9 +49,6 @@ public class Produto extends AbstractEntity<Integer> {
         return descr;
     }
 
-    public boolean isTemLimite() {
-        return temLimite;
-    }
 
     public Integer getQuantidade() {
         return quantidade;
