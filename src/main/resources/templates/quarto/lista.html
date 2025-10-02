@@ -35,21 +35,16 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="quarto, stat : ${quartos}">
-					<td th:text="${stat.index + 1}">1</td>
-					<td th:text="${quarto.tipo}">Suíte</td>
-					<td th:text="${#numbers.formatDecimal(quarto.valor, 1, 'POINT', 2, 'COMMA')}">150,00</td>
-					<td th:text="${quarto.eDisponivel ? 'Sim' : 'Não'}">Sim</td>
-					<td th:text="${quarto.hospedes != null ? quarto.hospedes.size() : 0}">0</td>
+				<tr th:each="q : ${quarto}">
+					<td th:text="${q.id}">1</td>
+					<td th:text="${q.tipo}">Suíte</td>
+					<td th:text="${#numbers.formatDecimal(q.valor, 1, 'POINT', 2, 'COMMA')}">150,00</td>
+					<td th:text="${q.eDisponivel ? 'Sim' : 'Não'}">Sim</td>
+					<td th:text="${q.hospedes != null ? q.hospedes.size() : 0}">0</td>
 					<td>
-						<a class="btn btn-info btn-sm" th:href="@{'/quarto/editar/' + ${quarto.id}}">
+						<a class="btn btn-info btn-sm" th:href="@{/quarto/editar/{id} (id=${q.id})}">
 							<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 						</a>
-						<button th:id="'btn_quartos/excluir/' + ${quarto.id}" type="button"
-								class="btn btn-danger btn-sm"
-								data-toggle="modal" data-target="#myModal">
-							<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
-						</button>
 					</td>
 				</tr>
 				</tbody>

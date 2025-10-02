@@ -26,7 +26,7 @@ public class Produto extends AbstractEntity<Integer> {
     }
 
     public void setTemLimite(boolean temLimite) {
-        this.temLimite = temLimite;
+        this.temLimite = temLimite = false;
     }
 
     public void setQuantidade(Integer quantidade) {

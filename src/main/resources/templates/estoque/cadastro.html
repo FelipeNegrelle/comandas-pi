@@ -18,52 +18,53 @@
 					</li>
 				</ul>
 			</div>
-			<a class="btn btn-primary btn-md" href="/produtos/listar" role="button">
+			<a class="btn btn-primary btn-md" href="/estoque/listar" role="button">
 				<span class="oi oi-spreadsheet" title="Cadastro" aria-hidden="true"></span>
 				<span>Listar Produtos</span>
 			</a>
 		</nav>
 
 		<div class="container" id="cadastro">
-			<form action="/produtos/salvar" method="POST">
+			<form th:action="${produto.id == null} ? @{/estoque/salvar} : @{/estoque/editar}"
+				  th:object="${produto}" method="POST">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="descr">Descrição</label>
 						<input type="text" class="form-control" id="descr"
 							   placeholder="Nome ou descrição do produto"
-							   name="descr" required/>
+							   th:field="*{descr}" required/>
 					</div>
 
 					<div class="form-group col-md-3">
 						<label for="quantidade">Quantidade</label>
 						<input type="number" class="form-control" id="quantidade"
-							   name="quantidade" min="0" required/>
+							   th:field="*{quantidade}" min="0" required/>
 					</div>
 
 					<div class="form-group col-md-3">
 						<label for="valor">Valor (R$)</label>
 						<input type="number" class="form-control" id="valor"
-							   name="valor" step="0.01" min="0"/>
+							   th:field="*{valor}" step="0.01" min="0"/>
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-3">
 						<label for="temLimite">Tem Limite?</label>
-						<select id="temLimite" class="form-control" name="temLimite">
-							<option value="false">Não</option>
-							<option value="true">Sim</option>
+						<select id="temLimite" class="form-control" th:field="*{temLimite}">
+							<option value="false">Não (serviço)</option>
+							<option value="true">Sim (consumível)</option>
 						</select>
 					</div>
 
 					<div class="form-group col-md-3">
 						<label for="minNoEstoque">Mínimo em estoque</label>
 						<input type="number" class="form-control" id="minNoEstoque"
-							   name="minNoEstoque" min="0"/>
+							   th:field="*{minNoEstoque}" min="0"/>
 					</div>
 				</div>
 
-				<input type="hidden" id="id" name="id"/>
+				<input type="hidden" id="id" th:field="*{id}"/>
 				<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 			</form>
 		</div>

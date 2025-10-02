@@ -30,7 +30,7 @@ public class ClienteController {
     @PostMapping("/salvar")
     public String salvar(Cliente cliente){
         service.salvar(cliente);
-        return "redirect:/cliente/cadastrar";
+        return "redirect:/cliente/listar";
     }
     @GetMapping("/editar/{id}")
     public String preEditar(@PathVariable("id") Integer id, ModelMap model) {

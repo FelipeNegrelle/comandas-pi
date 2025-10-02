@@ -21,7 +21,8 @@ public class QuartoController {
     }
 
     @GetMapping("/listar")
-    public String listar(){
+    public String listar(ModelMap model){
+        model.addAttribute("quarto", service.buscarTodos());
         return "/quarto/lista";
     }
 

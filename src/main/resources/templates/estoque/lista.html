@@ -18,7 +18,7 @@
 				</li>
 			</ul>
 		</div>
-		<a class="btn btn-primary btn-md" href="/produtos/cadastrar" role="button">
+		<a class="btn btn-primary btn-md" href="/estoque/cadastrar" role="button">
 			<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
 			<span>Novo Produto</span>
 		</a>
@@ -39,39 +39,25 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr th:each="produto, stat : ${produtos}">
-					<td th:text="${stat.index + 1}">1</td>
-					<td th:text="${produto.descr}">Exemplo Produto</td>
-
-					<!-- Campo editável de quantidade -->
+				<tr th:each="p: ${produto}">
+					<td th:text="${p.id}">1</td>
+					<td th:text="${p.descr}">Exemplo Produto</td>
+					<td th:text="${p.quantidade}">3</td>
+					<td th:text="${p.valor}">3</td>
+					<td th:text="${p.temLimite}">Sim</td>
+					<td th:text="${p.minNoEstoque}">Sim</td>
 					<td>
-						<form th:action="@{/produtos/atualizarQuantidade}" method="post" class="form-inline">
-							<input type="hidden" name="id" th:value="${produto.id}"/>
-							<input type="number" class="form-control form-control-sm mr-2"
-								   name="quantidade" min="0"
-								   th:value="${produto.quantidade}" style="width:80px"/>
-							<button type="submit" class="btn btn-success btn-sm">
-								<span class="oi oi-check" title="Salvar" aria-hidden="true"></span>
-							</button>
-						</form>
-					</td>
-
-					<td th:text="${#numbers.formatDecimal(produto.valor, 1, 'POINT', 2, 'COMMA')}">50,00</td>
-					<td th:text="${produto.temLimite ? 'Sim' : 'Não'}">Não</td>
-					<td th:text="${produto.minNoEstoque}">2</td>
-
-					<td>
-						<a class="btn btn-info btn-sm"
-						   th:href="@{'/produtos/editar/' + ${produto.id}}">
+						<a class="btn btn-info btn-sm" th:href="@{/estoque/editar/{id} (id=${p.id})}">
 							<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 						</a>
-						<button th:id="'btn_produtos/excluir/' + ${produto.id}"
-								type="button"
+						<button th:id="${ 'btn_estoque/excluir/' + p.id}" type="button"
 								class="btn btn-danger btn-sm"
-								data-toggle="modal" data-target="#myModal">
+								data-bs-toggle="modal" data-bs-target="#myModal">
 							<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 						</button>
 					</td>
+
+
 				</tr>
 				</tbody>
 			</table>
