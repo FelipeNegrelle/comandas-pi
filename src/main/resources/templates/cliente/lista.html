@@ -42,7 +42,7 @@
 						<td th:text="${c.telefone}">(41) 99999-0000</td>
 						<td th:text="${c.quarto != null ? c.quarto.numero : '—'}">101</td>
 						<td>
-							<a class="btn btn-info btn-sm" th:href="@{'/cliente/editar/' + ${c.id}}">
+							<a class="btn btn-info btn-sm" th:href="@{/cliente/editar/{id} (id=${c.id})}">
 								<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 							</a>
 							<button th:id="'btn_cliente/excluir/' + ${c.id}" type="button"

@@ -26,7 +26,8 @@
 		</div>
 
 		<div class="container" id="cadastro">
-			<form th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
+			<form th:action="${cliente.id == null} ? @{/cliente/salvar} : @{/cliente/editar}"
+				  th:object="${cliente}" method="POST">
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nome">Nome</label>
@@ -49,7 +50,7 @@
 
 				</div>
 
-				<input type="hidden" id="id" name="id"/>
+				<input type="hidden" id="id" th:field="*{id}"/>
 				<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 			</form>
 		</div>
