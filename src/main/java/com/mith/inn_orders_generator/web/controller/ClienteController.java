@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
+
     @Autowired
     private ClienteService service;
+
     @GetMapping("/cadastrar")
     public String cadastrar(Cliente cliente){
         return "/cliente/cadastro";

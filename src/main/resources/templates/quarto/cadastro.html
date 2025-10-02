@@ -26,32 +26,33 @@
 	</div>
 
 	<div class="container" id="cadastro">
-		<form action="/quarto/salvar" method="POST">
+		<form th:action="${quarto.id == null} ? @{/quarto/salvar} : @{/quarto/editar}"
+			  th:object="${quarto}" method="POST">
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="tipo">Tipo do Quarto</label>
 					<input type="text" class="form-control" id="tipo"
-						   placeholder="Ex: Suíte, Standard, Luxo" name="tipo" required/>
+						   placeholder="Ex: Suíte, Standard, Luxo" th:field="*{tipo}" required/>
 				</div>
 				<div class="form-group col-md-6">
 					<label for="valor">Valor (R$)</label>
-					<input type="number" step="0.01" class="form-control" id="valor"
-						   placeholder="Valor da diária" name="valor" required/>
+					<input type="number" step="1.00" class="form-control" id="valor"
+						   placeholder="Valor da diária" th:field="*{valor}" required/>
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="eDisponivel">Disponibilidade</label>
-					<select id="eDisponivel" class="form-control" name="eDisponivel" required>
-						<option value="">Selecione...</option>
+					<select id="eDisponivel" class="form-control" th:field="*{eDisponivel}" required>
 						<option value="true">Disponível</option>
 						<option value="false">Indisponível</option>
 					</select>
+
 				</div>
 			</div>
 
-			<input type="hidden" id="id" name="id"/>
+			<input type="hidden" id="id" th:field="*{id}"/>
 			<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 		</form>
 	</div>

@@ -16,7 +16,7 @@ public class Quarto extends AbstractEntity<Byte> {
     private Double valor;
 
     @Column(name = "esta_disponivel")
-    private boolean eDisponivel;
+    private boolean eDisponivel = true;
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
