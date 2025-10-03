@@ -33,7 +33,7 @@
 					<th>Descrição</th>
 					<th>Quantidade</th>
 					<th>Valor (R$)</th>
-					<th>Tem Limite?</th>
+					<th>Tipo</th>
 					<th>Mín. Estoque</th>
 					<th>Ação</th>
 				</tr>
@@ -44,7 +44,7 @@
 					<td th:text="${p.descr}">Exemplo Produto</td>
 					<td th:text="${p.quantidade}">3</td>
 					<td th:text="${p.valor}">3</td>
-					<td th:text="${p.temLimite}">Sim</td>
+					<td th:text="${p.temLimite} ? 'Consumível' : 'Serviço'">Serviço</td>
 					<td th:text="${p.minNoEstoque}">Sim</td>
 					<td>
 						<a class="btn btn-info btn-sm" th:href="@{/estoque/editar/{id} (id=${p.id})}">
