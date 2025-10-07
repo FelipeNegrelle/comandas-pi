@@ -7,7 +7,8 @@ import java.util.List;
 public interface ComandaDao {
     void save(Comanda comanda);
     void update(Comanda comanda);
-    void delete(Integer id);
-    Comanda findById(Integer id);
+    void delete(Long id);
+    Comanda findById(Long id);
     List<Comanda> findAll();
+    List<Comanda> findByEstaFechadaFalse();
 }

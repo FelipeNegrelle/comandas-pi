@@ -9,9 +9,10 @@ public interface ComandaService {
 
     void editar(Comanda comanda);
 
-    void excluir(Integer id);
+    void excluir(Long id);
 
-    Comanda buscarPorId(Integer id);
+    Comanda buscarPorId(Long id);
 
     List<Comanda> buscarTodos();
+    List<Comanda> listarAbertas();
 }

@@ -26,13 +26,13 @@ public class ComandaServiceImpl implements ComandaService{
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void excluir(Long id) {
         dao.delete(id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Comanda buscarPorId(Integer id) {
+    public Comanda buscarPorId(Long id) {
         return dao.findById(id);
     }
 
@@ -40,5 +40,10 @@ public class ComandaServiceImpl implements ComandaService{
     @Override
     public List<Comanda> buscarTodos() {
         return dao.findAll();
+    }
+
+    @Override
+    public List<Comanda> listarAbertas() {
+        return dao.findByEstaFechadaFalse();
     }
 }
