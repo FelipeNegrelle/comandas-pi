@@ -1,6 +1,7 @@
 package com.mith.inn_orders_generator.service;
 
 import com.mith.inn_orders_generator.domain.Item;
+import com.mith.inn_orders_generator.dto.ItemDTO;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface ItemService {
 
     Item buscarPorId(Integer id);
 
-    List<Item> buscarTodos();
+    List<ItemDTO> buscarTodos();
 }
