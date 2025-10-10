@@ -1,6 +1,9 @@
 package com.mith.inn_orders_generator.domain;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "ITENS")
@@ -23,6 +26,10 @@ public class Item extends AbstractEntity<Long> {
     private Cliente cliente;
 
     private Double valor;
+    private Integer quantidade;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date data;
 
     private String requerente;
 
@@ -106,5 +113,21 @@ public class Item extends AbstractEntity<Long> {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }

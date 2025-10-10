@@ -21,8 +21,13 @@
     <!-- Form principal -->
     <form th:action="@{/comandas/salvar}" th:object="${comanda}" method="post">
 
-      <!-- Campo hidden para o cliente responsável -->
-      <input type="hidden" th:field="*{responsavel}"/>
+      <select th:field="*{responsavel}" class="form-select">
+        <option th:each="c : ${clientes}"
+                th:value="${c.id}"
+                th:text="${c.nome}">
+        </option>
+      </select>
+
 
       <!-- Tabela de itens -->
       <table class="table table-bordered mt-3">
@@ -53,7 +58,7 @@
           </td>
           <td><input type="number" step="0.01" name="itens[0].valor" class="form-control"/></td>
           <td><span>0</span></td>
-          <td><input type="text" name="itens[0].nomeConsumidor" class="form-control"/></td>
+          <td><input type="text" name="itens[0].requerente" class="form-control"/></td>
         </tr>
         </tbody>
 

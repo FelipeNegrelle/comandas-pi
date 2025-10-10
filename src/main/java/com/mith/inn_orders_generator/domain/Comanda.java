@@ -11,7 +11,7 @@ public class Comanda extends AbstractEntity<Long> {
 
     private Date data;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_cliente_responsavel_fk")
     private Cliente responsavel;
 

@@ -44,24 +44,24 @@ public class ComandaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute("comanda") Comanda comanda,
-                         @RequestParam("itemId") String itemId,
+                         @RequestParam("itens[0].itemSelecionado") String itemSelecionado,
                          @RequestParam("itens[0].quantidade") Integer quantidade,
                          @RequestParam("itens[0].valor") Double valor,
-                         @RequestParam("itens[0].nomeConsumidor") String nomeConsumidor) {
+                         @RequestParam("itens[0].requerente") String requerente) {
 
         if (comanda.getTotal() == null) comanda.setTotal(0.0);
         comanda.setEstaFechada(false);
 
-
-        if (itemId != null && !itemId.isEmpty()) {
-            String[] parts = itemId.split("-");
+        if (itemSelecionado != null && !itemSelecionado.isEmpty()) {
+            String[] parts = itemSelecionado.split("-");
             String tipo = parts[0];
             Long id = Long.parseLong(parts[1]);
 
             Item item = new Item();
             item.setComanda(comanda);
             item.setValor(valor);
-            item.setRequerente(nomeConsumidor);
+            item.setRequerente(requerente);
+            item.setQuantidade(quantidade != null ? quantidade : 1);
 
             if ("Produto".equalsIgnoreCase(tipo)) {
                 Produto produto = produtoService.buscarPorId(id.intValue());
@@ -71,17 +71,16 @@ public class ComandaController {
                 item.setQuarto(quarto);
             }
 
-            Double totalItem = (quantidade != null ? quantidade : 1) * (valor != null ? valor : 0.0);
+            double totalItem = item.getQuantidade() * (valor != null ? valor : 0.0);
             comanda.setTotal(comanda.getTotal() + totalItem);
 
-            if (comanda.getItens() == null) {
-                comanda.setItens(new ArrayList<>());
-            }
+            if (comanda.getItens() == null) comanda.setItens(new ArrayList<>());
             comanda.getItens().add(item);
         }
 
         comandaService.salvar(comanda);
-        return "redirect:/home";
+        return "redirect:/";
     }
+
 
 }
