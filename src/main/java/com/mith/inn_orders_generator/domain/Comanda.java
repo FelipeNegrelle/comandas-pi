@@ -2,6 +2,7 @@ package com.mith.inn_orders_generator.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,8 @@ public class Comanda extends AbstractEntity<Long> {
     @JoinColumn(name = "id_cliente_responsavel_fk")
     private Cliente responsavel;
 
-    @OneToMany(mappedBy = "comanda")
-    private List<Item> itens;
+    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> itens = new ArrayList<>();
 
     @Column(name = "esta_fechada")
     private boolean estaFechada;
