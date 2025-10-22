@@ -40,7 +40,7 @@
 						<td th:text="${c.nome}">João Silva</td>
 						<td th:text="${c.doc}">123.456.789-00</td>
 						<td th:text="${c.telefone}">(41) 99999-0000</td>
-						<td th:text="${c.quarto != null ? c.quarto.numero : '—'}">101</td>
+						<td th:text="${c.quarto != null ? c.quarto.tipo : '—'}">101</td>
 						<td>
 							<a class="btn btn-info btn-sm" th:href="@{/cliente/editar/{id} (id=${c.id})}">
 								<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
@@ -60,4 +60,4 @@
 	</section>
 
 </body>
-</html>		
+</html>

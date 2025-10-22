@@ -3,9 +3,13 @@ package com.mith.inn_orders_generator.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "PRODUTO")
+@Getter
+@Setter
 public class Produto extends AbstractEntity<Integer> {
 
     @Column(name = "descricao")
@@ -14,6 +18,9 @@ public class Produto extends AbstractEntity<Integer> {
     @Column(name = "tem_limite")
     private Boolean temLimite;
 
+    @Column(name = "tipo")
+    private Character tipo;
+
     private Integer quantidade;
 
     @Column(name = "minimo_no_estoque")
@@ -21,44 +28,11 @@ public class Produto extends AbstractEntity<Integer> {
 
     private Double valor;
 
-    public void setDescr(String descr) {
-        this.descr = descr;
-    }
+    public String getTipoDesc() {
+        if (tipo != null) {
+            return tipo.equals('P') ? "Consumível" : "Serviço";
+        }
 
-    public Boolean getTemLimite() {
-        return temLimite;
-    }
-
-    public void setTemLimite(Boolean temLimite) {
-        this.temLimite = temLimite;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public void setMinNoEstoque(Integer minNoEstoque) {
-        this.minNoEstoque = minNoEstoque;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public String getDescr() {
-        return descr;
-    }
-
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public Integer getMinNoEstoque() {
-        return minNoEstoque;
-    }
-
-    public Double getValor() {
-        return valor;
+        return "";
     }
 }

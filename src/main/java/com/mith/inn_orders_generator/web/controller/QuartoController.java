@@ -41,4 +41,14 @@ public class QuartoController {
         service.editar(quarto);
         return "redirect:/quarto/listar";
     }
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") Byte id, ModelMap model){
+        Quarto quarto = service.buscarPorId(id);
+        if (quarto.getHospedes() == null || quarto.getHospedes().isEmpty()){
+            service.excluir(id);
+        } else {
+            model.addAttribute("fail", "Quarto não pode ser excluído. Possui hóspedes vinculados.");
+        }
+        return listar(model);
+    }
 }
