@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Visualizar Comanda</title>
+</head>
+<body>
+<section layout:fragment="corpo">
+  <div class="container mt-4">
+    <div class="page-header">
+      <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <i class="oi oi-caret-right"></i>
+              <span>Visualizar Comanda</span>
+            </li>
+          </ul>
+          <a class="btn btn-primary btn-md" th:href="@{/}" role="button">
+            <span class="oi oi-arrow-left"></span>
+            <span>Voltar</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title" th:text="'Comanda #' + ${comanda.id}">Comanda #1</h4>
+        <p>
+          <strong>Data:</strong>
+          <span th:text="${comanda.data != null ? #dates.format(comanda.data, 'dd/MM/yyyy') : '-'}">-</span>
+        </p>
+        <p>
+          <strong>Responsável:</strong>
+          <span th:text="${comanda.responsavel != null ? comanda.responsavel.nome : '-'}">-</span>
+        </p>
+
+        <h5>Itens</h5>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Valor Unit.</th>
+                <th>Total Parcial</th>
+                <th>Requerente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="it, iterStat : ${comanda.itens}">
+                <td th:text="${iterStat.index + 1}">1</td>
+                <td th:text="${it.produto != null ? 'Produto' : (it.quarto != null ? 'Quarto' : '-')}">Produto</td>
+                <td th:text="${it.descricao}">Nome</td>
+                <td th:text="${it.quantidade}">1</td>
+                <td th:text="${#numbers.formatDecimal(it.valor, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                <td th:text="${#numbers.formatDecimal(it.quantidade * it.valor, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                <td th:text="${it.requerente}">-</td>
+              </tr>
+              <tr th:if="${comanda.itens == null or comanda.itens.size() == 0}">
+                <td colspan="7">Sem itens</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div>
+            <strong>Total:</strong>
+            <span th:text="${comanda.total != null ? #numbers.formatDecimal(comanda.total, 1, 'POINT', 2, 'COMMA') : '0,00'}">0,00</span>
+          </div>
+          <div>
+            <a class="btn btn-info" th:href="@{/comandas/editar/{id}(id=${comanda.id})}">Editar</a>
+            <a class="btn btn-secondary" th:href="@{/}">Voltar</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

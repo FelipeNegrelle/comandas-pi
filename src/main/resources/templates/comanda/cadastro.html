@@ -19,12 +19,15 @@
 
 
     <!-- Form principal -->
-    <form th:action="@{/comandas/salvar}" th:object="${comanda}" method="post">
+    <form th:action="${comanda.id == null} ? @{/comandas/salvar} : @{/comandas/editar}"
+          th:object="${comanda}" method="post">
 
-      <select th:field="*{responsavel}" class="form-select">
-        <option th:each="c : ${clientes}"
-                th:value="${c.id}"
-                th:text="${c.nome}">
+      <!-- Select template oculto usado pelo JS para clonar opções sem depender de nomes fixos -->
+      <select id="template-item-select" style="display:none;">
+        <option value="">-- Selecione --</option>
+        <option th:each="i : ${itens}"
+                th:value="${i.tipo + '-' + i.id}"
+                th:text="${i.tipo + ': ' + i.nome}">
         </option>
       </select>
 
@@ -42,9 +45,43 @@
         </tr>
         </thead>
       <tbody id="itens-container">
-        <tr>
+        <!-- Se já houver itens na comanda, renderiza cada um com índices corretos para binding -->
+        <tr th:each="it, iterStat : ${comanda.itens}" th:data-index="${iterStat.index}">
+          <td>
+            <input type="date" th:attr="name=${'itens[' + iterStat.index + '].data'}" class="form-control"
+                   th:value="${it.data != null ? #dates.format(it.data, 'yyyy-MM-dd') : ''}" />
+          </td>
+          <td>
+            <input type="number" min="1" th:attr="name=${'itens[' + iterStat.index + '].quantidade'}" class="form-control"
+                   th:value="${it.quantidade}" />
+          </td>
+          <td>
+            <select th:attr="name=${'itens[' + iterStat.index + '].itemSelecionado'}" class="form-select">
+              <option value="">-- Selecione --</option>
+              <option th:each="i : ${itens}"
+                      th:value="${i.tipo + '-' + i.id}"
+                      th:text="${i.tipo + ': ' + i.nome}"
+                      th:selected="${(it.produto != null ? 'Produto-' + it.produto.id : (it.quarto != null ? 'Quarto-' + it.quarto.id : '')) == (i.tipo + '-' + i.id)}">
+              </option>
+            </select>
+            <!-- id do item para bind com entidade existente -->
+            <input type="hidden" th:attr="name=${'itens[' + iterStat.index + '].id'}" th:value="${it.id}" />
+          </td>
+          <td>
+            <input type="number" step="0.01" th:attr="name=${'itens[' + iterStat.index + '].valor'}" class="form-control"
+                   th:value="${it.valor}" />
+          </td>
+          <td><span class="total-parcial" th:text="${it.quantidade != null && it.valor != null ? it.quantidade * it.valor : 0}">0</span></td>
+          <td>
+            <input type="text" th:attr="name=${'itens[' + iterStat.index + '].requerente'}" class="form-control"
+                   th:value="${it.requerente}" />
+          </td>
+          <td><button type="button" class="btn btn-danger btn-sm remover-item">X</button></td>
+        </tr>
+        <!-- Se não houver itens, mantém uma linha em branco padrão (índice 0) -->
+        <tr th:if="${comanda.itens == null or comanda.itens.size() == 0}">
           <td><input type="date" name="itens[0].data" class="form-control"/></td>
-          <td><input type="number" min="1" name="itens[0].quantidade" class="form-control"/></td>
+          <td><input type="number" min="1" name="itens[0].quantidade" class="form-control" value="1"/></td>
           <td>
             <select name="itens[0].itemSelecionado" class="form-select">
               <option value="">-- Selecione --</option>
@@ -59,20 +96,20 @@
           <td><input type="text" name="itens[0].requerente" class="form-control"/></td>
           <td><button type="button" class="btn btn-danger btn-sm remover-item">X</button></td>
         </tr>
-      </tbody>
+       </tbody>
 
-      </table>
+       </table>
 
-      <!-- Botão para adicionar nova linha -->
-      <button type="button" class="btn btn-success mt-2" id="adicionar-item">+ Adicionar Item</button>
+       <!-- Botão para adicionar nova linha -->
+       <button type="button" class="btn btn-success mt-2" id="adicionar-item">+ Adicionar Item</button>
 
-      <!-- Botão salvar -->
-      <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Salvar Comanda</button>
-      </div>
+       <!-- Botão salvar -->
+       <div class="mt-3">
+         <button type="submit" class="btn btn-primary">Salvar Comanda</button>
+       </div>
 
 
-    </form>
+     </form>
 
   </div>
 
@@ -84,30 +121,95 @@
       const addItemButton = document.getElementById("adicionar-item");
       const itensContainer = document.getElementById("itens-container");
 
+      function reindexRows() {
+        const rows = Array.from(itensContainer.querySelectorAll('tr'));
+        rows.forEach((row, idx) => {
+          // inputs/selects in row
+          const dateInput = row.querySelector('input[type="date"]');
+          if (dateInput) dateInput.name = `itens[${idx}].data`;
+
+          const qtdInput = row.querySelector('input[type="number"][min]');
+          if (qtdInput) qtdInput.name = `itens[${idx}].quantidade`;
+
+          const select = row.querySelector('select');
+          if (select) select.name = `itens[${idx}].itemSelecionado`;
+
+          const valorInput = Array.from(row.querySelectorAll('input[type="number"]')).find(i => !i.hasAttribute('min'));
+          if (valorInput) valorInput.name = `itens[${idx}].valor`;
+
+          const requerenteInput = row.querySelector('input[type="text"]');
+          if (requerenteInput) requerenteInput.name = `itens[${idx}].requerente`;
+
+          const hiddenId = row.querySelector('input[type="hidden"]');
+          if (hiddenId) hiddenId.name = `itens[${idx}].id`;
+
+          // atualizar total parcial se possível
+          const totalSpan = row.querySelector('.total-parcial');
+          if (totalSpan) {
+            const q = qtdInput && qtdInput.value ? parseFloat(qtdInput.value) : 0;
+            const v = valorInput && valorInput.value ? parseFloat(valorInput.value) : 0;
+            totalSpan.textContent = (q * v).toFixed(2);
+          }
+        });
+      }
+
+      function attachRemoveHandler() {
+        itensContainer.addEventListener('click', function(e) {
+          if (e.target && e.target.classList && e.target.classList.contains('remover-item')) {
+            const row = e.target.closest('tr');
+            if (row) {
+              row.remove();
+              reindexRows();
+            }
+          }
+        });
+      }
+
       if (addItemButton && itensContainer) {
         addItemButton.addEventListener("click", function() {
 
-          const index = itensContainer.children.length;
+          const index = itensContainer.querySelectorAll('tr').length;
           const novaLinha = document.createElement("tr");
-          novaLinha.innerHTML = `
-              <td><input type="date" name="itens[${index}].data" class="form-control"/></td>
-              <td><input type="number" min="1" name="itens[${index}].quantidade" class="form-control" value="1"/></td>
-              <td>
-                  <select name="itens[${index}].itemSelecionado" class="form-select">
-                      <option value="">-- Selecione --</option>
-                      ${
-                          Array.from(document.querySelectorAll('select[name="itens[0].itemSelecionado"] option'))
-                              .map(opt => `<option value="${opt.value}">${opt.text}</option>`)
-                              .join('')
-                      }
-                  </select>
-              </td>
-              <td><input type="number" step="0.01" name="itens[${index}].valor" class="form-control"/></td>
-              <td><span>0</span></td>
-              <td><input type="text" name="itens[${index}].requerente" class="form-control"/></td>
-          `;
-          itensContainer.appendChild(novaLinha);
-        });
+          novaLinha.classList.add('dynamic');
+           // construir select a partir do template oculto
+           const opts = Array.from(document.querySelectorAll('#template-item-select option'))
+             .map(opt => `<option value="${opt.value}">${opt.text}</option>`)
+             .join('');
+           novaLinha.innerHTML = `
+               <td><input type="date" name="itens[${index}].data" class="form-control"/></td>
+               <td><input type="number" min="1" name="itens[${index}].quantidade" class="form-control" value="1"/></td>
+               <td>
+                   <select name="itens[${index}].itemSelecionado" class="form-select">
+                       ${opts}
+                   </select>
+               </td>
+               <td><input type="number" step="0.01" name="itens[${index}].valor" class="form-control"/></td>
+               <td><span class="total-parcial">0</span></td>
+               <td><input type="text" name="itens[${index}].requerente" class="form-control"/></td>
+               <td><button type="button" class="btn btn-danger btn-sm remover-item">X</button></td>
+           `;
+           itensContainer.appendChild(novaLinha);
+          // don't reindex server-rendered rows now; we'll reindex everything on submit
+         });
+
+        attachRemoveHandler();
+
+        // reindexar todos os inputs antes do submit para garantir índices contíguos
+        const form = document.querySelector('form[th\:object]') || document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            const rows = Array.from(itensContainer.querySelectorAll('tr'));
+            rows.forEach((row, idx) => {
+              const dateInput = row.querySelector('input[type="date"]'); if (dateInput) dateInput.name = `itens[${idx}].data`;
+              const qtdInput = row.querySelector('input[type="number"][min]'); if (qtdInput) qtdInput.name = `itens[${idx}].quantidade`;
+              const select = row.querySelector('select'); if (select) select.name = `itens[${idx}].itemSelecionado`;
+              const valorInput = Array.from(row.querySelectorAll('input[type="number"]')).find(i => !i.hasAttribute('min')); if (valorInput) valorInput.name = `itens[${idx}].valor`;
+              const requerenteInput = row.querySelector('input[type="text"]'); if (requerenteInput) requerenteInput.name = `itens[${idx}].requerente`;
+              const hiddenId = row.querySelector('input[type="hidden"]'); if (hiddenId) hiddenId.name = `itens[${idx}].id`;
+            });
+          });
+        }
+
       }
     });
   </script>
